@@ -1,0 +1,71 @@
+<div class="col-md-6 offset-md-3">
+  <h3 class="text-center">Registro de Formulario</h3>
+  <form (ngSubmit)="onSubmit()" #personaForm="ngForm">
+    <div class="form-group">
+      <label>Nombre:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nombre"
+        [(ngModel)]="persona.nombre"
+        name="nombre"
+        minlength="4"
+        maxlength="10"
+        required
+        placeholder="Escriba su nombre"
+        #nombre="ngModel"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)"
+      >
+        <div *ngIf="nombre.errors['required']">Digite su nombre.</div>
+        <div *ngIf="nombre.errors['minlength']">
+          El nombre tiene que tener como mínimo 4 caracteres.
+        </div>
+        <div *ngIf="nombre.errors['maxlength']">
+          El nombre tiene que tener como máximo 10 caracteres.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>¿Qué música prefieres?</label>
+      <select
+        class="form-control"
+        id="musica"
+        [(ngModel)]="persona.musica"
+        name="musica"
+      >
+        <option value="Rock">Rock</option>
+        <option value="Salsa">Salsa</option>
+        <option value="Jazz">Jazz</option>
+        <option value="Clásica">Clásica</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Email:</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        [(ngModel)]="persona.email"
+        name="email"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        required
+        placeholder="Escriba su e-mail"
+        #email="ngModel"
+        (blur)="email.control.markAsTouched()"
+      />
+      <div class="alert alert-danger" *ngIf="email.invalid || email.touched">
+        <div *ngIf="email.errors['required']">Digite su email.</div>
+        <div *ngIf="email.errors['pattern']">
+          Digite su email con el siguiente formato: nombre123@gmail.com
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-success" [disabled]="!personaForm.form.valid">
+      Guardar
+    </button>
+  </form>
+</div>
